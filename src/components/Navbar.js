@@ -2,13 +2,17 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 export default function Navbar() {
   const [scrollState, setScrollState] = useState("top");
   const [user, setUser] = useState(null);
   const [activeMenu, setActiveMenu] = useState(null);
 
-  // ✅ stable timeout (fix flicker + disappearing menu)
+  // ✅ MOBILE STATE
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileDropdown, setMobileDropdown] = useState(null);
+
   const timeoutRef = useRef(null);
 
   const handleEnter = (menu) => {
@@ -69,13 +73,12 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* ================= NAV + DROPDOWN WRAPPER ================= */}
+        {/* ================= DESKTOP (UNCHANGED) ================= */}
         <div
           className="relative hidden md:flex"
           onMouseEnter={() => clearTimeout(timeoutRef.current)}
           onMouseLeave={handleLeave}
         >
-          {/* NAV ITEMS */}
           <nav className="flex gap-8 text-sm font-medium text-white">
             <div
               onMouseEnter={() => handleEnter("services")}
@@ -106,7 +109,7 @@ export default function Navbar() {
             </div>
           </nav>
 
-          {/* ===== MEGA MENU (FIXED POSITIONING) ===== */}
+          {/* ===== MEGA MENU (UNCHANGED) ===== */}
           <div
             className={`absolute left-0 top-full mt-2 w-[700px] transition-all duration-300 ${
               activeMenu
@@ -115,7 +118,6 @@ export default function Navbar() {
             }`}
           >
             <div className="rounded-2xl bg-black/90 backdrop-blur-xl border border-white/10 p-6 shadow-2xl">
-              {/* SERVICES */}
               {activeMenu === "services" && (
                 <div className="grid grid-cols-2 gap-6">
                   <div>
@@ -145,7 +147,6 @@ export default function Navbar() {
                 </div>
               )}
 
-              {/* PRODUCTS */}
               {activeMenu === "products" && (
                 <div className="grid grid-cols-2 gap-6">
                   <div>
@@ -175,7 +176,6 @@ export default function Navbar() {
                 </div>
               )}
 
-              {/* SPACES */}
               {activeMenu === "spaces" && (
                 <div className="grid grid-cols-2 gap-6">
                   <div>
@@ -202,7 +202,6 @@ export default function Navbar() {
                 </div>
               )}
 
-              {/* EXPLORE */}
               {activeMenu === "explore" && (
                 <div className="grid gap-3 text-sm">
                   <Link href="#">How it works</Link>
@@ -214,31 +213,172 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* RIGHT SIDE */}
+        {/* RIGHT SIDE (UNCHANGED) */}
         <div className="flex items-center gap-3">
-          {!user ? (
-            <>
-              <Link href="/login" className="text-sm font-medium text-white/80">
-                Sign in
-              </Link>
-              <Link
-                href="/register"
-                className="bg-[#6100FF] hover:bg-[#5000CC] text-white px-4 py-1.5 rounded-2xl text-sm font-semibold"
-              >
-                Join Now
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link href="/dashboard">Dashboard</Link>
+          {/* 👇 hide ONLY these on mobile */}
+          <div className="hidden md:flex items-center gap-3">
+            {!user ? (
+              <>
+                <Link
+                  href="/login"
+                  className="text-sm font-medium text-white/80"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  href="/register"
+                  className="bg-[#6100FF] hover:bg-[#5000CC] text-white px-4 py-1.5 rounded-2xl text-sm font-semibold"
+                >
+                  Join Now
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link href="/dashboard">Dashboard</Link>
+                <button onClick={logout}>Logout</button>
+              </>
+            )}
+          </div>
+
+          {/* ✅ MOBILE MENU BUTTON (always visible on mobile) */}
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="md:hidden ml-2"
+          >
+            <Menu size={22} />
+          </button>
+        </div>
+      </div>
+
+      {/* ================= MOBILE MENU ================= */}
+      <div
+        className={`fixed inset-0 bg-black z-[100] md:hidden transition-transform duration-300 ${
+          mobileOpen ? "translate-y-0" : "-translate-y-full"
+        }`}
+      >
+        <div className="p-6 flex flex-col h-full">
+          {/* HEADER */}
+          <div className="flex justify-between items-center mb-6">
+            <img src="/logo.png" className="h-6" />
+            <button onClick={() => setMobileOpen(false)}>
+              <X size={24} />
+            </button>
+          </div>
+
+          {/* MENU */}
+          <div className="flex-1 space-y-6 text-lg">
+            {/* SERVICES */}
+            <div className="border-b border-white/10 pb-4">
               <button
-                onClick={logout}
-                className="bg-[#6100FF] hover:bg-[#5000CC] text-white px-4 py-1.5 rounded-md text-sm font-semibold"
+                onClick={() =>
+                  setMobileDropdown(
+                    mobileDropdown === "services" ? null : "services",
+                  )
+                }
+                className="w-full flex justify-between items-center"
               >
-                Logout
+                Hire a Professional
+                <ChevronDown size={18} />
               </button>
-            </>
-          )}
+
+              {mobileDropdown === "services" && (
+                <div className="mt-3 pl-4 space-y-2 text-sm text-gray-400">
+                  <p>Plumbing</p>
+                  <p>Electrical</p>
+                  <p>Cleaning</p>
+                  <p>Repairs</p>
+                </div>
+              )}
+            </div>
+
+            {/* PRODUCTS */}
+            <div className="border-b border-white/10 pb-4">
+              <button
+                onClick={() =>
+                  setMobileDropdown(
+                    mobileDropdown === "products" ? null : "products",
+                  )
+                }
+                className="w-full flex justify-between items-center"
+              >
+                Shop Products
+                <ChevronDown size={18} />
+              </button>
+
+              {mobileDropdown === "products" && (
+                <div className="mt-3 pl-4 space-y-2 text-sm text-gray-400">
+                  <p>Handmade</p>
+                  <p>Fashion</p>
+                  <p>Furniture</p>
+                  <p>Gifts</p>
+                </div>
+              )}
+            </div>
+
+            {/* SPACES */}
+            <div className="border-b border-white/10 pb-4">
+              <button
+                onClick={() =>
+                  setMobileDropdown(
+                    mobileDropdown === "spaces" ? null : "spaces",
+                  )
+                }
+                className="w-full flex justify-between items-center"
+              >
+                Book a Space
+                <ChevronDown size={18} />
+              </button>
+
+              {mobileDropdown === "spaces" && (
+                <div className="mt-3 pl-4 space-y-2 text-sm text-gray-400">
+                  <p>Event Centers</p>
+                  <p>Studios</p>
+                  <p>Co-working</p>
+                </div>
+              )}
+            </div>
+
+            {/* STATIC LINKS */}
+            <div className="border-b border-white/10 pb-4">Pricing</div>
+            <div className="border-b border-white/10 pb-4">Blog</div>
+          </div>
+
+          {/* CTA */}
+          <div className="space-y-3">
+            {!user ? (
+              <>
+                <Link
+                  href="/login"
+                  className="block w-full text-center bg-white/10 py-3 rounded-full"
+                >
+                  Sign in
+                </Link>
+
+                <Link
+                  href="/register"
+                  className="block w-full text-center bg-white text-black py-3 rounded-full font-medium"
+                >
+                  Join Now
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="block w-full text-center bg-white/10 py-3 rounded-full"
+                >
+                  Dashboard
+                </Link>
+
+                <button
+                  onClick={logout}
+                  className="w-full bg-white text-black py-3 rounded-full"
+                >
+                  Logout
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>
