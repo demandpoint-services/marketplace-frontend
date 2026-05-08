@@ -24,9 +24,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <main className="min-h-screen text-white overflow-x-hidden">
+    <main className="min-h-dvh text-white overflow-x-hidden">
       {/* HERO */}
-      <section className="relative min-h-screen pt-25 px-6 overflow-hidden">
+      <section className="relative min-h-dvh pt-28 md:pt-32 px-5 sm:px-6 overflow-hidden">
         {/* ===== BACKGROUND ===== */}
         <div
           id="hero-bg"
@@ -39,8 +39,8 @@ export default function Hero() {
           />
         </div>
 
-        {/* ===== CONTENT (TOP LAYER) ===== */}
-        <div className="relative z-30 text-center ">
+        {/* ===== CONTENT ===== */}
+        <div className="relative z-30 text-center">
           {/* Badge */}
           <div className="inline-flex items-center mb-6 px-2 py-1 rounded-full bg-white/10 border border-white/20 text-sm backdrop-blur-md cursor-pointer">
             {" "}
@@ -54,13 +54,13 @@ export default function Hero() {
           </div>
 
           {/* Heading */}
-          <h1 className="text-5xl md:text-6xl font-semibold leading-[1.05]">
+          <h1 className="text-4xl sm:text-6xl font-semibold leading-tight md:leading-[1.05]">
             The Marketplace
-            <span className="block leading-[1.5]">For Skills & Services</span>
+            <span className="block">For Skills & Services</span>
           </h1>
 
           {/* Subtext */}
-          <p className="mt-4 text-white max-w-2xl mx-auto">
+          <p className="mt-5 text-sm sm:text-base text-white/90 max-w-2xl mx-auto leading-relaxed px-2">
             Hire professionals, shop products
             <span className="block">
               and book spaces all in one trusted ecosystem.
@@ -69,35 +69,36 @@ export default function Hero() {
 
           {/* CTA */}
           <div className="mt-8 flex justify-center text-sm">
-            <div className="flex bg-white/10 border border-white/20 rounded-full overflow-hidden backdrop-blur-md">
+            <div className="flex items-center w-full max-w-md bg-white/10 border border-white/20 rounded-full overflow-hidden backdrop-blur-md">
               <input
                 placeholder="Email address"
-                className="bg-transparent px-5 py-3 outline-none w-64"
+                className="bg-transparent px-4 sm:px-5 py-3 outline-none flex-1 min-w-0 text-sm"
               />
-              <button className="bg-[#6100FF] text-white px-6 m-1 rounded-full font-semibold">
+
+              <button className="bg-[#6100FF] text-white px-4 py-2 sm:px-6 m-1 rounded-full font-semibold whitespace-nowrap cursor-pointer">
                 Start now
               </button>
             </div>
           </div>
         </div>
 
-        {/* ===== PREVIEW SECTION (NOW BELOW OVERLAY) ===== */}
-        <div className="relative z-10 mt-40 flex justify-center">
-          <div className="relative w-full max-w-5xl rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black">
+        {/* ===== PREVIEW SECTION ===== */}
+        <div className="relative z-10 mt-16 sm:mt-24 md:mt-32 lg:mt-40 flex justify-center px-2">
+          <div className="relative w-full max-w-5xl rounded-2xl overflow-hidden border-[2px] border-white/30 shadow-2xl bg-white/30">
             <img
               src="/hero.jpg"
               alt="Marketplace preview"
               className="w-full h-auto object-cover"
             />
 
-            {/* optional slight internal fade */}
+            {/* internal fade */}
             <div className="absolute inset-x-0 bottom-0 h-[25%] bg-gradient-to-t from-black/60 to-transparent" />
 
             <div className="absolute inset-0 pointer-events-none rounded-2xl ring-1 ring-white/10" />
           </div>
         </div>
 
-        {/* 🔥 GLOBAL OVERLAY (THIS NOW AFFECTS EVERYTHING) */}
+        {/* ===== GLOBAL OVERLAY ===== */}
         <div className="pointer-events-none absolute inset-0 z-20">
           {/* main fade */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black" />
