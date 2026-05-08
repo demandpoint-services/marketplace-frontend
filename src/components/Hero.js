@@ -26,7 +26,7 @@ export default function Hero() {
   return (
     <main className="min-h-dvh text-white overflow-x-hidden">
       {/* HERO */}
-      <section className="relative min-h-dvh pt-28 md:pt-32 px-5 sm:px-6 overflow-hidden">
+      <section className="relative min-h-dvh pt-24 md:pt-32 px-5 sm:px-6 overflow-hidden">
         {/* ===== BACKGROUND ===== */}
         <div
           id="hero-bg"
@@ -101,7 +101,7 @@ export default function Hero() {
         {/* ===== GLOBAL OVERLAY ===== */}
         <div className="pointer-events-none absolute inset-0 z-20">
           {/* main fade */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black" />
 
           {/* strong bottom */}
           <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black via-black/50 to-transparent" />
