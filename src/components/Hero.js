@@ -104,7 +104,7 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black" />
 
           {/* strong bottom */}
-          <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black via-black/50 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black via-black/30 to-transparent" />
 
           {/* vignette */}
           <div className="absolute inset-0 bg-black/30 [mask-image:radial-gradient(ellipse_at_center,transparent_45%,black)]" />
