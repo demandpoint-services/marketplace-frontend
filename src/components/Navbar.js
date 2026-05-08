@@ -281,7 +281,8 @@ export default function Navbar() {
           mobileOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-dvh">
+          {" "}
           {/* MOBILE HEADER */}
           <div className="px-6 py-5 flex justify-between items-center">
             <Link href="/" className="flex items-center">
@@ -292,9 +293,8 @@ export default function Navbar() {
               />
             </Link>
           </div>
-
           {/* MOBILE CONTENT */}
-          <div className="px-6 pt-6 pb-6 flex-1 flex flex-col">
+          <div className="px-6 pt-6 pb-6 flex-1 flex flex-col overflow-y-auto">
             {/* MENU */}
             <div className="flex-1 space-y-2 text-md font-medium">
               {/* SERVICES */}
