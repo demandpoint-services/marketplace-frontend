@@ -69,8 +69,8 @@ export default function Navbar() {
 
   const styles = {
     top: "bg-transparent border-transparent",
-    mid: "bg-white/5 backdrop-blur-md border-b border-white/10",
-    scrolled: "bg-black/80 backdrop-blur-lg border-b border-zinc-800",
+    mid: "bg-white/5 backdrop-blur-md ",
+    scrolled: "bg-black/80 backdrop-blur-lg",
   };
 
   return (
