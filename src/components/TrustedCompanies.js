@@ -7,7 +7,7 @@ export default function TrustedCompanies() {
     { name: "Sendbox", logo: "/sendbox.png" },
     { name: "Mercado", logo: "/mercado.png" },
     { name: "Flutterwave", logo: "/flutterwave.png" },
-    { name: "Paypal", logo: "/paypal.png" },
+    { name: "Paypal", logo: "/PayPal.png" },
   ];
 
   return (

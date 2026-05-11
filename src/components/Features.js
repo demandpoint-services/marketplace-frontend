@@ -10,7 +10,7 @@ export default function Features() {
   return (
     <section className="relative bg-black py-12 md:py-32 overflow-hidden">
       {/* Background Glow */}
-      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_50%)]" />
+      <div className="absolute inset-0" />
 
       <div className="relative max-w-6xl mx-auto px-6">
         {/* Heading */}
