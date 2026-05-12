@@ -6,7 +6,7 @@ export default function Journey() {
       {/* Background Glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,237,0.12),transparent_40%)]" />
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-5xl mx-auto px-6">
         {/* Top Intro */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start mb-20">
           {/* Left */}
@@ -15,7 +15,7 @@ export default function Journey() {
               DEMAND POINT ECOSYSTEM
             </p>
 
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-white leading-[1.05] mb-6">
+            <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-[1.05] mb-6">
               Explore services, products & premium spaces in one platform
             </h2>
 
@@ -68,7 +68,7 @@ export default function Journey() {
             />
 
             {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-black/20" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/100 md:via-black/20 to-black/100 md:to-black/20" />
           </div>
 
           <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 items-end min-h-[620px] p-8 md:p-14">
@@ -98,17 +98,17 @@ export default function Journey() {
             {/* Stats */}
             <div className="flex flex-col sm:flex-row gap-10 lg:justify-end">
               <div>
-                <h4 className="text-6xl font-semibold text-white mb-2">10K+</h4>
+                <h4 className="text-5xl font-semibold text-white mb-2">10K+</h4>
 
-                <p className="text-white/60 text-lg">
+                <p className="text-white text-sm">
                   Active users across services & bookings
                 </p>
               </div>
 
               <div>
-                <h4 className="text-6xl font-semibold text-white mb-2">3+</h4>
+                <h4 className="text-5xl font-semibold text-white mb-2">3+</h4>
 
-                <p className="text-white/60 text-lg">
+                <p className="text-white text-sm">
                   Integrated marketplaces in one platform
                 </p>
               </div>
@@ -117,7 +117,7 @@ export default function Journey() {
         </div>
 
         {/* Brand Logos */}
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-10 opacity-40">
+        {/* <div className="mt-14 flex flex-wrap items-center justify-center gap-10 opacity-40">
           <span className="text-2xl font-semibold text-white">ARTISANS</span>
 
           <span className="text-2xl font-semibold text-white">VENDORS</span>
@@ -127,7 +127,7 @@ export default function Journey() {
           <span className="text-2xl font-semibold text-white">BOOKINGS</span>
 
           <span className="text-2xl font-semibold text-white">MARKETPLACE</span>
-        </div>
+        </div> */}
       </div>
     </section>
   );

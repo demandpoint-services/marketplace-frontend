@@ -12,7 +12,7 @@ export default function TrustedCompanies() {
 
   return (
     <section className="relative z-10 bg-black md:pt-12 pb-24">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6">
         {/* Heading */}
         <div className="text-center ">
           <p className="text-sm uppercase tracking-[0.25em] text-white/50 mb-3">

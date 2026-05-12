@@ -12,7 +12,7 @@ export default function Features() {
       {/* Background Glow */}
       <div className="absolute inset-0" />
 
-      <div className="relative max-w-6xl mx-auto px-6">
+      <div className="relative max-w-5xl mx-auto px-6">
         {/* Heading */}
         <div className="max-w-3xl mx-auto text-center mb-24">
           <p className="text-sm uppercase tracking-[0.25em] text-white/40 mb-5">
@@ -43,7 +43,7 @@ export default function Features() {
                 Hire trusted professionals instantly
               </h3>
 
-              <p className="text-white/60 text-lg leading-relaxed max-w-xl">
+              <p className="text-white/60 text-sm leading-relaxed max-w-xl">
                 Connect with verified artisans and skilled professionals for
                 repairs, installations, beauty services, construction,
                 maintenance, and more.
@@ -93,7 +93,7 @@ export default function Features() {
                 Discover handmade & ready-made products
               </h3>
 
-              <p className="text-white/60 text-lg leading-relaxed max-w-xl">
+              <p className="text-white/60 text-sm leading-relaxed max-w-xl">
                 Shop local crafts, fashion, furniture, art, cultural products,
                 and custom-made items from trusted vendors.
               </p>
@@ -145,7 +145,7 @@ export default function Features() {
                   Secure transactions, smart discovery, and seamless bookings
                 </h3>
 
-                <p className="text-white/60 text-lg leading-relaxed max-w-2xl">
+                <p className="text-white/60 text-sm leading-relaxed max-w-2xl">
                   Demand Point combines intelligent matching, escrow-secured
                   payments, real-time bookings, reviews, ratings, and vendor
                   verification into one unified marketplace experience designed
