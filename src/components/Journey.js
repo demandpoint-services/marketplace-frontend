@@ -89,7 +89,7 @@ export default function Journey() {
                 one connected ecosystem.
               </p>
 
-              <button className="group inline-flex items-center gap-3 text-white text-lg font-medium">
+              <button className="group inline-flex items-center gap-3 text-white text-lg font-medium cursor-pointer">
                 Read story
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </button>

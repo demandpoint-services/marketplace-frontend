@@ -3,6 +3,7 @@ import TrustedCompanies from "@/components/TrustedCompanies";
 import Features from "@/components/Features";
 import Journey from "@/components/Journey";
 import Testimonials from "@/components/Testimonials";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Features />
       <Journey />
       <Testimonials />
+      <Footer />
     </main>
   );
 }
