@@ -2,8 +2,9 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/lib/config";
 
-const API = "http://localhost:5000/api";
+const API = API_URL;
 
 const categories = [
   "Plumber",

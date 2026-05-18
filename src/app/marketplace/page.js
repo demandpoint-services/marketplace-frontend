@@ -10,8 +10,9 @@ import {
   ShoppingBag,
   Truck,
 } from "lucide-react";
+import { API_URL } from "@/lib/config";
 
-const API = "http://localhost:5000/api";
+const API = API_URL;
 
 export default function MarketplaceHome() {
   const router = useRouter();

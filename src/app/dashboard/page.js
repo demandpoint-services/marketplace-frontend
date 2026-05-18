@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { API_URL } from "@/lib/config";
 
-const API = "http://localhost:5000/api";
+const API = API_URL;
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);

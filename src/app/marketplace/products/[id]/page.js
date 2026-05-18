@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import { API_URL } from "@/lib/config";
 
-const API = "http://localhost:5000/api";
+const API = API_URL;
 
 export default function ProductDetails() {
   const { id } = useParams();

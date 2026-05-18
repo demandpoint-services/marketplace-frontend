@@ -3,8 +3,9 @@
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { API_URL } from "@/lib/config";
 
-const API = "http://localhost:5000/api";
+const API = API_URL;
 
 export default function CartPage() {
   const { cart, removeItem, fetchCart, addItem } = useCart();
