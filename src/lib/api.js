@@ -1,6 +1,6 @@
 const API_URL =
   process.env.NODE_ENV === "production"
-    ? "https://marketplace-backend-wjy0.onrender.com"
+    ? "https://marketplace-backend-wjy0.onrender.com/api"
     : "http://localhost:5000";
 
 export const registerUser = async (data) => {
