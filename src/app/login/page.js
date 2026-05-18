@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { loginUser } from "@/lib/api";
+import { loginUser, getMyArtisanProfile } from "@/lib/api";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -15,74 +15,106 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const validateForm = () => {
+    if (!form.email.trim()) return "Email is required";
+    if (!/\S+@\S+\.\S+/.test(form.email)) return "Enter a valid email";
+    if (!form.password) return "Password is required";
+    return null;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    if (loading) return;
+
     setError("");
 
+    const validationError = validateForm();
+    if (validationError) return setError(validationError);
+
+    setLoading(true);
+
     try {
-      const data = await loginUser(form);
+      const data = await loginUser({
+        email: form.email.trim().toLowerCase(),
+        password: form.password,
+      });
 
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        document.cookie = `token=${data.token}; path=/`;
-        localStorage.setItem("user", JSON.stringify(data.user));
-
-        router.push("/dashboard");
-      } else {
-        setError(data.message || "Login failed");
+      if (!data?.token || !data?.user) {
+        return setError(data?.message || "Login failed");
       }
-    } catch (err) {
-      setError("Something went wrong");
-    }
 
-    setLoading(false);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      document.cookie = `token=${data.token}; path=/; max-age=604800; samesite=lax`;
+
+      const role = data.user.role;
+
+      if (role === "artisan") {
+        const profile = await getMyArtisanProfile(data.token);
+        router.push(profile?._id ? "/dashboard" : "/artisan/setup");
+      } else {
+        router.push("/dashboard");
+      }
+    } catch {
+      setError("Unable to login");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black">
+    <div className="min-h-screen flex items-center justify-center bg-black px-4 relative overflow-hidden">
+      {/* glow */}
+      <div className="absolute w-[500px] h-[500px] bg-[#7C3BFF]/20 blur-3xl rounded-full" />
+
       <form
         onSubmit={handleSubmit}
-        className="bg-zinc-900 p-8 rounded-xl shadow-md w-full max-w-md"
+        className="relative w-full max-w-md rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-2xl p-8 shadow-xl"
       >
-        <h2 className="text-2xl font-bold mb-6">Login</h2>
+        <h2 className="text-3xl font-semibold text-white">Welcome back</h2>
+        <p className="text-white/50 mt-2 mb-6">Login to continue shopping</p>
 
         {error && (
-          <div className="bg-red-100 text-red-600 p-2 mb-4 rounded">
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 rounded-lg mb-4">
             {error}
           </div>
         )}
 
         <input
-          type="email"
-          placeholder="Email"
-          className="w-full border p-3 rounded mb-4"
+          name="email"
+          placeholder="Email address"
           value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          onChange={handleChange}
+          className="w-full mb-4 px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-[#7C3BFF]"
         />
 
         <input
+          name="password"
           type="password"
           placeholder="Password"
-          className="w-full border p-3 rounded mb-4"
           value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
+          onChange={handleChange}
+          className="w-full mb-6 px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-[#7C3BFF]"
         />
 
         <button
-          className="w-full bg-black text-white p-3 rounded"
           disabled={loading}
+          className="w-full bg-[#7C3BFF] hover:bg-[#6a2ee6] text-white py-3 rounded-xl font-medium transition"
         >
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        <p className="mt-4 text-sm">
-          Don't have an account?{" "}
+        <p className="text-center text-white/50 text-sm mt-6">
+          Don’t have an account?{" "}
           <span
-            className="text-blue-600 cursor-pointer"
             onClick={() => router.push("/register")}
+            className="text-white cursor-pointer hover:underline"
           >
-            Register
+            Create account
           </span>
         </p>
       </form>

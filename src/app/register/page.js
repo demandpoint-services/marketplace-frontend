@@ -17,89 +17,120 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const validateForm = () => {
+    if (!form.name.trim()) return "Full name is required";
+    if (!form.email.trim()) return "Email is required";
+    if (!/\S+@\S+\.\S+/.test(form.email)) return "Enter a valid email";
+    if (form.password.length < 6)
+      return "Password must be at least 6 characters";
+    return null;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    if (loading) return;
+
     setError("");
 
+    const validationError = validateForm();
+    if (validationError) return setError(validationError);
+
+    setLoading(true);
+
     try {
-      const data = await registerUser(form);
+      const data = await registerUser({
+        ...form,
+        name: form.name.trim(),
+        email: form.email.trim().toLowerCase(),
+      });
 
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        document.cookie = `token=${data.token}; path=/`;
-        localStorage.setItem("user", JSON.stringify(data.user));
-
-        router.push("/dashboard");
-      } else {
-        setError(data.message || "Registration failed");
+      if (!data?.token || !data?.user) {
+        return setError(data?.message || "Registration failed");
       }
-    } catch (err) {
-      setError("Something went wrong");
-    }
 
-    setLoading(false);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      document.cookie = `token=${data.token}; path=/; max-age=604800; samesite=lax`;
+
+      router.push(
+        data.user.role === "artisan" ? "/artisan/setup" : "/dashboard",
+      );
+    } catch {
+      setError("Unable to create account");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-black px-4 relative overflow-hidden">
+      {/* glow */}
+      <div className="absolute w-[500px] h-[500px] bg-[#7C3BFF]/20 blur-3xl rounded-full" />
+
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-xl shadow-md w-full max-w-md"
+        className="relative w-full max-w-md rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-2xl p-8 shadow-xl"
       >
-        <h2 className="text-2xl font-bold mb-6">Create Account</h2>
+        <h2 className="text-3xl font-semibold text-white">Create account</h2>
+        <p className="text-white/50 mt-2 mb-6">Join the marketplace today</p>
 
         {error && (
-          <div className="bg-red-100 text-red-600 p-2 mb-4 rounded">
+          <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 rounded-lg mb-4">
             {error}
           </div>
         )}
 
         <input
-          type="text"
-          placeholder="Full Name"
-          className="w-full border p-3 rounded mb-4"
+          name="name"
+          placeholder="Full name"
           value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          onChange={handleChange}
+          className="w-full mb-4 px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-[#7C3BFF]"
         />
 
         <input
-          type="email"
-          placeholder="Email"
-          className="w-full border p-3 rounded mb-4"
+          name="email"
+          placeholder="Email address"
           value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          onChange={handleChange}
+          className="w-full mb-4 px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-[#7C3BFF]"
         />
 
         <input
+          name="password"
           type="password"
           placeholder="Password"
-          className="w-full border p-3 rounded mb-4"
           value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
+          onChange={handleChange}
+          className="w-full mb-4 px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white placeholder:text-white/30 outline-none focus:border-[#7C3BFF]"
         />
 
         <select
-          className="w-full border p-3 rounded mb-4"
+          name="role"
           value={form.role}
-          onChange={(e) => setForm({ ...form, role: e.target.value })}
+          onChange={handleChange}
+          className="w-full mb-6 px-4 py-3 rounded-xl bg-black/40 border border-white/10 text-white outline-none focus:border-[#7C3BFF]"
         >
           <option value="client">Client</option>
           <option value="artisan">Artisan</option>
         </select>
 
         <button
-          className="w-full bg-black text-white p-3 rounded"
           disabled={loading}
+          className="w-full bg-[#7C3BFF] hover:bg-[#6a2ee6] text-white py-3 rounded-xl font-medium transition"
         >
-          {loading ? "Creating..." : "Register"}
+          {loading ? "Creating account..." : "Register"}
         </button>
 
-        <p className="mt-4 text-sm">
-          Already have account?{" "}
+        <p className="text-center text-white/50 text-sm mt-6">
+          Already have an account?{" "}
           <span
-            className="text-blue-600 cursor-pointer"
             onClick={() => router.push("/login")}
+            className="text-white cursor-pointer hover:underline"
           >
             Login
           </span>

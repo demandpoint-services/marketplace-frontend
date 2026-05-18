@@ -6,7 +6,14 @@ import { ChevronDown } from "lucide-react";
 
 export default function Navbar() {
   const [scrollState, setScrollState] = useState("top");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("user");
+      return stored ? JSON.parse(stored) : null;
+    }
+
+    return null;
+  });
   const [activeMenu, setActiveMenu] = useState(null);
 
   // ✅ MOBILE STATE
@@ -39,9 +46,6 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    const stored = localStorage.getItem("user");
-    if (stored) setUser(JSON.parse(stored));
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -248,8 +252,18 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  <Link href="/dashboard">Dashboard</Link>
-                  <button onClick={logout}>Logout</button>
+                  <Link
+                    href="/dashboard"
+                    className="text-white px-4 py-1.5 rounded-2xl text-sm font-semibold"
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={logout}
+                    className="bg-[rgb(207,0,0)] hover:bg-[rgb(189,0,0)] text-white px-4 py-1.5 rounded-2xl text-sm font-semibold cursor-pointer"
+                  >
+                    Logout
+                  </button>
                 </>
               )}
             </div>
@@ -324,10 +338,10 @@ export default function Navbar() {
                   }`}
                 >
                   <div className="pl-4 space-y-2 text-sm text-gray-400">
-                    <p>Plumbing</p>
-                    <p>Electrical</p>
-                    <p>Cleaning</p>
-                    <p>Repairs</p>
+                    <Link href="/services">Plumbing</Link>
+                    <Link href="/services">Electrical</Link>
+                    <Link href="/services">Cleaning</Link>
+                    <Link href="/services">Repairs</Link>
                   </div>
                 </div>
               </div>
@@ -359,10 +373,10 @@ export default function Navbar() {
                   }`}
                 >
                   <div className="pl-4 space-y-2 text-sm text-gray-400">
-                    <p>Handmade</p>
-                    <p>Fashion</p>
-                    <p>Furniture</p>
-                    <p>Gifts</p>
+                    <Link href="/marketplace">Handmade</Link>
+                    <Link href="/marketplace">Fashion</Link>
+                    <Link href="/marketplace">Furniture</Link>
+                    <Link href="/marketplace">Gifts</Link>
                   </div>
                 </div>
               </div>
@@ -436,7 +450,7 @@ export default function Navbar() {
 
                   <button
                     onClick={logout}
-                    className="w-full bg-white text-black py-3 rounded-full"
+                    className="block w-full text-center bg-red-600 text-white py-3 rounded-full font-medium"
                   >
                     Logout
                   </button>
