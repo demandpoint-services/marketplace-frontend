@@ -1,6 +1,7 @@
 import "./globals.css";
 import LayoutClient from "@/components/LayoutClient";
 import { Inter, Geist_Mono } from "next/font/google";
+import { CartProvider } from "@/context/CartContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,7 +22,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${geistMono.variable}`}>
       <body className="min-h-screen bg-black text-white font-sans antialiased">
-        <LayoutClient>{children}</LayoutClient>
+        <LayoutClient>
+          <CartProvider>{children}</CartProvider>
+        </LayoutClient>
       </body>
     </html>
   );
