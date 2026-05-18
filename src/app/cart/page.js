@@ -3,7 +3,7 @@
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { API_URL } from "@/lib/config";
+import { API_URL } from "@/lib/api";
 
 const API = API_URL;
 

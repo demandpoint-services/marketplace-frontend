@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-import { API_URL } from "@/lib/config";
+import { API_URL } from "@/lib/api";
 
 const API = API_URL;
 

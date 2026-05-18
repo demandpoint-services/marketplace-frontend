@@ -10,7 +10,7 @@ import {
   ShoppingBag,
   Truck,
 } from "lucide-react";
-import { API_URL } from "@/lib/config";
+import { API_URL } from "@/lib/api";
 
 const API = API_URL;
 

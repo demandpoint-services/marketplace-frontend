@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import { API_URL } from "@/lib/config";
+import { API_URL } from "@/lib/api";
 
 const API = API_URL;
 
