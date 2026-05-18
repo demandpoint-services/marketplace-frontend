@@ -9,6 +9,8 @@ export default function ServicesPage() {
   const [artisans, setArtisans] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [category, setCategory] = useState("all");
+  const [loading, setLoading] = useState(true);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -16,10 +18,17 @@ export default function ServicesPage() {
   }, []);
 
   const fetchArtisans = async () => {
-    const res = await fetch(`${API}/artisans`);
-    const data = await res.json();
-    setArtisans(data);
-    setFiltered(data);
+    try {
+      const res = await fetch(`${API}/artisans`);
+      const data = await res.json();
+
+      setArtisans(data);
+      setFiltered(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleFilter = (cat) => {
@@ -33,44 +42,105 @@ export default function ServicesPage() {
   };
 
   return (
-    <div className="p-10">
-      <h1 className="text-2xl font-bold mb-6">Hire a Professional</h1>
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* background glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,255,0.12),transparent_45%)]" />
 
-      {/* Filters */}
-      <div className="flex gap-3 mb-6">
-        {["all", "Plumber", "Electrician", "Carpenter"].map((cat) => (
-          <button
-            key={cat}
-            onClick={() => handleFilter(cat)}
-            className={`px-4 py-2 border rounded ${
-              category === cat ? "bg-black text-white" : ""
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+      <div className="relative max-w-6xl mx-auto px-6 py-16">
+        {/* HEADER */}
+        <div className="mb-10">
+          <h1 className="text-4xl md:text-5xl font-semibold pt-12">
+            Hire Trusted Professionals
+          </h1>
 
-      {/* Artisan List */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {filtered.map((artisan) => (
-          <div key={artisan._id} className="border p-4 rounded shadow">
-            <h2 className="font-bold text-lg">{artisan.user.name}</h2>
+          <p className="text-white/50 mt-3 max-w-xl">
+            Connect with verified artisans for repairs, installations, and
+            services in your area.
+          </p>
+        </div>
 
-            <p className="text-gray-600">{artisan.category}</p>
-
-            <p className="text-sm text-gray-500">{artisan.location}</p>
-
-            <p className="mt-2 text-yellow-600">⭐ {artisan.rating}</p>
-
+        {/* FILTERS */}
+        <div className="flex flex-wrap gap-3 mb-10">
+          {["all", "Plumber", "Electrician", "Carpenter"].map((cat) => (
             <button
-              onClick={() => router.push(`/artisan/${artisan._id}`)}
-              className="mt-3 bg-black text-white px-3 py-1 rounded"
+              key={cat}
+              onClick={() => handleFilter(cat)}
+              className={`px-5 py-2 rounded-full border text-sm transition-all duration-200 ${
+                category === cat
+                  ? "bg-white text-black border-white"
+                  : "bg-white/5 border-white/10 text-white/60 hover:text-white hover:border-white/20"
+              }`}
             >
-              View Profile
+              {cat}
             </button>
+          ))}
+        </div>
+
+        {/* CONTENT */}
+        {loading ? (
+          <p className="text-white/40">Loading artisans...</p>
+        ) : filtered.length === 0 ? (
+          <div className="text-white/40 border border-white/10 bg-white/5 rounded-2xl p-10 text-center">
+            No professionals found in this category.
           </div>
-        ))}
+        ) : (
+          <div className="grid md:grid-cols-3 gap-6">
+            {filtered.map((artisan) => (
+              <div
+                key={artisan._id}
+                className="group relative rounded-2xl border border-white/10 bg-white/5 p-6 hover:border-white/20 transition-all duration-300 overflow-hidden"
+              >
+                {/* hover glow */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-[radial-gradient(circle_at_top_left,rgba(124,58,255,0.15),transparent_50%)]" />
+
+                <div className="relative">
+                  {/* PROFILE IMAGE */}
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-full overflow-hidden bg-white/10 border border-white/10">
+                      {artisan.profileImage ? (
+                        <img
+                          src={artisan.profileImage}
+                          alt={artisan.user?.name}
+                          className="w-12 h-12 rounded-full object-cover border border-white/10"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-white/10" />
+                      )}
+                    </div>
+
+                    <div>
+                      <h2 className="text-xl font-semibold leading-tight">
+                        {artisan.user?.name}
+                      </h2>
+
+                      <p className="text-white/50 text-sm">
+                        {artisan.category}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* LOCATION */}
+                  <p className="text-white/30 text-xs mt-1">
+                    {artisan.location}
+                  </p>
+
+                  {/* RATING */}
+                  <div className="mt-4 text-yellow-400 text-sm">
+                    ⭐ {artisan.rating || "4.5"}
+                  </div>
+
+                  {/* BUTTON */}
+                  <button
+                    onClick={() => router.push(`/services/${artisan._id}`)}
+                    className="mt-5 w-full bg-white text-black py-2 rounded-xl font-medium hover:scale-[1.02] transition"
+                  >
+                    View Profile
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
