@@ -1,4 +1,7 @@
-const API_URL = "http://localhost:5000/api";
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://marketplace-backend-wjy0.onrender.com"
+    : "http://localhost:5000";
 
 export const registerUser = async (data) => {
   const res = await fetch(`${API_URL}/auth/register`, {
