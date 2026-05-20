@@ -80,7 +80,7 @@ export default function ArtisanSetup() {
     // upload to Cloudinary
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "ml_default");
+    formData.append("upload_preset", "demandpoint_uploads");
 
     try {
       const res = await fetch(
