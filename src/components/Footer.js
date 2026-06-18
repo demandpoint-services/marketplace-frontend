@@ -59,13 +59,13 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://linkedin.com"
+                href="https://Linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 className="opacity-60 hover:opacity-100 transition-all duration-300"
               >
-                <img src="/linkedin.svg" alt="LinkedIn" className="h-5 w-5" />
+                <img src="/Linkedin.svg" alt="LinkedIn" className="h-5 w-5" />
               </a>
             </div>
           </div>
