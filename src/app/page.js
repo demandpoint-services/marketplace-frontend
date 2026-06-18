@@ -13,7 +13,6 @@ export default function Home() {
       <Features />
       <Journey />
       <Testimonials />
-      <Footer />
     </main>
   );
 }

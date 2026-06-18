@@ -143,16 +143,16 @@ export default function Navbar() {
                       <p className="text-xs text-gray-400 mb-3">Categories</p>
                       <ul className="space-y-2 text-sm">
                         <li>
-                          <Link href="#">Plumbing</Link>
+                          <Link href="/services">Plumbing</Link>
                         </li>
                         <li>
-                          <Link href="#">Electrical</Link>
+                          <Link href="/services">Electrical</Link>
                         </li>
                         <li>
-                          <Link href="#">Cleaning</Link>
+                          <Link href="/services">Cleaning</Link>
                         </li>
                         <li>
-                          <Link href="#">Repairs</Link>
+                          <Link href="/services">Repairs</Link>
                         </li>
                       </ul>
                     </div>
@@ -172,16 +172,16 @@ export default function Navbar() {
                       <p className="text-xs text-gray-400 mb-3">Shop</p>
                       <ul className="space-y-2 text-sm">
                         <li>
-                          <Link href="#">Handmade</Link>
+                          <Link href="/marketplace">Handmade</Link>
                         </li>
                         <li>
-                          <Link href="#">Fashion</Link>
+                          <Link href="/marketplace">Fashion</Link>
                         </li>
                         <li>
-                          <Link href="#">Furniture</Link>
+                          <Link href="/marketplace">Furniture</Link>
                         </li>
                         <li>
-                          <Link href="#">Gifts</Link>
+                          <Link href="/marketplace">Gifts</Link>
                         </li>
                       </ul>
                     </div>
@@ -201,13 +201,13 @@ export default function Navbar() {
                       <p className="text-xs text-gray-400 mb-3">Spaces</p>
                       <ul className="space-y-2 text-sm">
                         <li>
-                          <Link href="#">Event Centers</Link>
+                          <Link href="/services">Event Centers</Link>
                         </li>
                         <li>
-                          <Link href="#">Studios</Link>
+                          <Link href="/services">Studios</Link>
                         </li>
                         <li>
-                          <Link href="#">Co-working</Link>
+                          <Link href="/services">Co-working</Link>
                         </li>
                       </ul>
                     </div>
@@ -223,9 +223,9 @@ export default function Navbar() {
 
                 {activeMenu === "explore" && (
                   <div className="grid gap-3 text-sm">
-                    <Link href="#">How it works</Link>
-                    <Link href="#">Pricing</Link>
-                    <Link href="#">Top Vendors</Link>
+                    <Link href="/how-it-works">How it works</Link>
+                    <Link href="/pricing">Pricing</Link>
+                    <Link href="/top-vendors">Top Vendors</Link>
                   </div>
                 )}
               </div>
@@ -254,7 +254,7 @@ export default function Navbar() {
                 <>
                   <Link
                     href="/dashboard"
-                    className="text-white px-4 py-1.5 rounded-2xl text-sm font-semibold"
+                    className="text-white px-4 py-1.5 rounded-2xl text-sm font-semibold hover:text-white/80"
                   >
                     Dashboard
                   </Link>
