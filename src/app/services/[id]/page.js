@@ -267,7 +267,7 @@ export default function ArtisanProfile() {
                   {/* BUTTON */}
                   <button
                     disabled={loading}
-                    className="w-full bg-white text-black py-4 rounded-2xl font-semibold hover:scale-[1.02] transition-all duration-300 disabled:opacity-50"
+                    className="cursor-pointer w-full bg-[#6100FF] text-white py-4 rounded-2xl font-semibold hover:bg-[#5500ff] transition-all duration-300 disabled:opacity-50"
                   >
                     {loading ? "Booking..." : "Book Now"}
                   </button>
