@@ -102,6 +102,10 @@ export default function ArtisanSetup() {
     }
   };
 
+  const Spinner = () => (
+    <div className="h-5 w-5 rounded-full border-2 border-white/20 border-t-white animate-spin" />
+  );
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -235,9 +239,9 @@ export default function ArtisanSetup() {
           {/* SUBMIT */}
           <button
             disabled={loading}
-            className="w-full bg-white text-black py-3 rounded-xl font-semibold hover:scale-[1.02] transition"
+            className="w-full bg-[#7C3BFF] hover:bg-[#6a2ee6] text-white py-3 rounded-xl font-medium transition flex items-center justify-center"
           >
-            {loading ? "Saving..." : "Save Profile"}
+            {loading ? <Spinner /> : "Login"}
           </button>
         </form>
       </div>
