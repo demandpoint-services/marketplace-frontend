@@ -103,9 +103,13 @@ export default function LoginPage() {
 
         <button
           disabled={loading}
-          className="w-full bg-[#7C3BFF] hover:bg-[#6a2ee6] text-white py-3 rounded-xl font-medium transition"
+          className="cursor-pointer w-full bg-[#7C3BFF] hover:bg-[#6a2ee6] disabled:opacity-70 flex items-center justify-center text-white py-3 rounded-xl font-medium transition"
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? (
+            <div className=" h-5 w-5 rounded-full border-2 border-white/20 border-t-white animate-spin" />
+          ) : (
+            "Login"
+          )}
         </button>
 
         <p className="text-center text-white/50 text-sm mt-6">

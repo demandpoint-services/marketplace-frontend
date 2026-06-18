@@ -121,9 +121,15 @@ export default function RegisterPage() {
 
         <button
           disabled={loading}
-          className="w-full bg-[#7C3BFF] hover:bg-[#6a2ee6] text-white py-3 rounded-xl font-medium transition"
+          className="w-full bg-[#7C3BFF] hover:bg-[#6a2ee6] disabled:opacity-70 disabled:cursor-not-allowed text-white py-3 rounded-xl font-medium transition flex items-center justify-center gap-2"
         >
-          {loading ? "Creating account..." : "Register"}
+          {loading ? (
+            <>
+              <div className="h-5 w-5 rounded-full border-2 border-white/20 border-t-white animate-spin" />
+            </>
+          ) : (
+            "Register"
+          )}
         </button>
 
         <p className="text-center text-white/50 text-sm mt-6">
