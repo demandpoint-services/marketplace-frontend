@@ -31,8 +31,8 @@ export default function MarketplacePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <p className="text-white/40">Loading marketplace...</p>
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="h-10 w-10 rounded-full border-2 border-white/10 border-t-white animate-spin" />
       </div>
     );
   }
@@ -41,7 +41,7 @@ export default function MarketplacePage() {
     <div className="min-h-screen bg-black text-white px-6 py-16">
       <div className="max-w-6xl mx-auto">
         {/* HEADER */}
-        <div className="mb-10">
+        <div className="my-12">
           <h1 className="text-4xl font-semibold">Marketplace</h1>
           <p className="text-white/40 mt-2">
             Discover products from trusted vendors

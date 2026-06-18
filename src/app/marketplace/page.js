@@ -100,7 +100,7 @@ export default function MarketplaceHome() {
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
       {/* HERO */}
-      <section className="relative pt-28 pb-24 px-6 overflow-hidden">
+      <section className="relative py-28 px-6 overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,237,0.18),transparent_45%)]" />
 
@@ -130,7 +130,7 @@ export default function MarketplaceHome() {
               <div className="flex flex-wrap gap-4 mt-10">
                 <button
                   onClick={() => router.push("/marketplace/products")}
-                  className="group inline-flex items-center gap-3 rounded-full bg-white text-black px-7 py-4 font-medium transition-all duration-300 hover:scale-[1.02]"
+                  className="cursor-pointer group inline-flex items-center gap-3 rounded-full bg-white text-black px-7 py-4 font-medium transition-all duration-300 hover:scale-[1.02]"
                 >
                   Explore Marketplace
                   <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -138,7 +138,7 @@ export default function MarketplaceHome() {
 
                 <button
                   onClick={() => router.push("/vendor/products/new")}
-                  className="rounded-full border border-white/15 bg-white/[0.03] backdrop-blur-xl px-7 py-4 font-medium hover:bg-white/[0.06] transition"
+                  className="cursor-pointer rounded-full border border-white/15 bg-white/[0.03] backdrop-blur-xl px-7 py-4 font-medium hover:bg-white/[0.06] transition"
                 >
                   Become a Vendor
                 </button>
@@ -172,7 +172,7 @@ export default function MarketplaceHome() {
               </div>
 
               {/* MAIN CARD */}
-              <div className="relative z-10 w-full max-w-[360px] rounded-[36px] border border-white/10 bg-white/[0.05] backdrop-blur-2xl p-5 shadow-[0_0_80px_rgba(124,59,255,0.15)]">
+              <div className="relative z-10 w-full max-w-[420px] rounded-[36px] border border-white/10 bg-white/[0.05] backdrop-blur-2xl p-5 shadow-[0_0_80px_rgba(124,59,255,0.15)]">
                 {/* IMAGE */}
                 <div className="relative h-[340px] rounded-[28px] overflow-hidden bg-white/10">
                   <img
@@ -230,7 +230,7 @@ export default function MarketplaceHome() {
                       International Shipping
                     </div>
 
-                    <button className="rounded-full bg-white text-black px-5 py-2 text-sm font-medium hover:scale-[1.02] transition">
+                    <button className="cursor-pointer rounded-full bg-white text-black px-5 py-2 text-sm font-medium hover:scale-[1.02] transition">
                       View Product
                     </button>
                   </div>
