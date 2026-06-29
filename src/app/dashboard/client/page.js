@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { API_URL } from "@/lib/api";
+import { API_URL, getCurrentUser } from "@/lib/api";
 
 const API = API_URL;
 
@@ -11,8 +11,18 @@ export default function ClientDashboard() {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    const stored = localStorage.getItem("user");
-    if (stored) setUser(JSON.parse(stored));
+    async function loadUser() {
+      try {
+        const user = await getCurrentUser();
+
+        setUser(user);
+
+        localStorage.setItem("user", JSON.stringify(user));
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    loadUser();
   }, []);
 
   useEffect(() => {

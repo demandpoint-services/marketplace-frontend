@@ -133,7 +133,7 @@ export default function ArtisanDashboard() {
                 </div>
 
                 <div>
-                  <p className="text-white/40">Notes</p>
+                  <p className="text-white/40">De</p>
                   <p>{selectedBooking.notes || "No additional notes"}</p>
                 </div>
               </div>
