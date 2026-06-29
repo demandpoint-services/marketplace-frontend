@@ -91,79 +91,105 @@ export default function ArtisanProfile() {
 
       <div className="relative max-w-6xl mx-auto px-6 py-16">
         {/* HERO */}
-        <div className="grid  gap-10 items-start pt-12">
+        <div className="grid lg:grid-cols-[1.2fr_.8fr] gap-10 items-start pt-12">
           {/* LEFT */}
           <div>
-            {/* PROFILE CARD */}
-            <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden p-8">
-              {/* glow */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(124,58,255,0.15),transparent_45%)]" />
+            <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6 md:p-10">
+              {/* Glow */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(124,58,255,.15),transparent_45%)]" />
 
               <div className="relative">
-                {/* PROFILE */}
-                <div className="flex flex-col md:flex-row md:items-center gap-6">
-                  <div className="w-28 h-28 rounded-full overflow-hidden border border-white/10 bg-white/10 shrink-0">
+                {/* Profile */}
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+                  {/* Avatar */}
+                  <div className="relative shrink-0">
                     {artisan.profileImage ? (
                       <img
                         src={artisan.profileImage}
                         alt={artisan.user?.name}
-                        className="w-full h-full object-cover"
+                        className="
+                w-28 h-28
+                md:w-36 md:h-36
+                rounded-full
+                object-cover
+                border-2
+                border-[#6100FF]
+                shadow-[0_0_30px_rgba(97,0,255,.35)]
+              "
                       />
                     ) : (
-                      <div className="w-full h-full bg-white/10" />
+                      <div className="w-28 h-28 md:w-36 md:h-36 rounded-full bg-white/10" />
                     )}
+
+                    {/* Online */}
+                    <span className="absolute bottom-2 right-2 w-5 h-5 rounded-full bg-green-500 border-[3px] border-black" />
                   </div>
 
-                  <div>
-                    <div className="flex items-center gap-3 flex-wrap">
-                      <h1 className="text-4xl font-semibold">
-                        {artisan.user?.name}
-                      </h1>
+                  {/* Details */}
+                  <div className="flex-1 text-center md:text-left">
+                    <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
+                      {artisan.user?.name}
+                    </h1>
 
-                      <span className="px-3 py-1 rounded-full text-xs border border-yellow-500/20 bg-yellow-500/10 text-yellow-300">
-                        ⭐ {artisan.rating || "4.5"}
-                      </span>
-                    </div>
-
-                    <p className="text-[#7C3BFF] mt-3 text-lg font-medium">
+                    <p className="mt-2 text-lg text-[#8B5CF6] font-medium">
                       {artisan.category}
                     </p>
 
-                    <p className="text-white/40 mt-2 text-sm">
-                      📍 {artisan.location || "Location not specified"}
+                    <p className="mt-2 text-gray-400">
+                      📍 {artisan.location || "Nigeria"}
                     </p>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-5">
+                      <div className="px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-300 text-sm">
+                        ⭐ {artisan.rating || "4.5"} Rating
+                      </div>
+
+                      <div className="px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-sm">
+                        Available
+                      </div>
+
+                      <div className="px-4 py-2 rounded-full bg-[#6100FF]/15 border border-[#6100FF]/20 text-[#B794F4] text-sm">
+                        Verified
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* BIO */}
+                {/* About */}
                 <div className="mt-10">
-                  <h2 className="text-xl font-semibold mb-4">
+                  <h2 className="text-xl font-semibold mb-3">
                     About Professional
                   </h2>
 
-                  <p className="text-white/60 leading-relaxed">
+                  <p className="text-gray-400 leading-8">
                     {artisan.bio || "This artisan has not added a bio yet."}
                   </p>
                 </div>
 
-                {/* STATS */}
-                <div className="grid grid-cols-3 gap-4 mt-10">
-                  <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
-                    <p className="text-white/40 text-sm">Category</p>
-                    <p className="mt-2 font-medium">{artisan.category}</p>
+                {/* Stats */}
+                <div className="grid grid-cols-3 gap-3 md:gap-5 mt-10">
+                  <div className="rounded-2xl border border-white/10 bg-black/30 p-4 md:p-6 text-center">
+                    <p className="text-gray-500 text-xs uppercase">Category</p>
+
+                    <p className="mt-2 font-semibold text-sm md:text-base">
+                      {artisan.category}
+                    </p>
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
-                    <p className="text-white/40 text-sm">Rating</p>
-                    <p className="mt-2 font-medium">
+                  <div className="rounded-2xl border border-white/10 bg-black/30 p-4 md:p-6 text-center">
+                    <p className="text-gray-500 text-xs uppercase">Rating</p>
+
+                    <p className="mt-2 font-semibold text-sm md:text-base">
                       ⭐ {artisan.rating || "4.5"}
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
-                    <p className="text-white/40 text-sm">Location</p>
-                    <p className="mt-2 font-medium truncate">
-                      {artisan.location || "N/A"}
+                  <div className="rounded-2xl border border-white/10 bg-black/30 p-4 md:p-6 text-center">
+                    <p className="text-gray-500 text-xs uppercase">Status</p>
+
+                    <p className="mt-2 font-semibold text-green-400 text-sm md:text-base">
+                      Available
                     </p>
                   </div>
                 </div>
@@ -172,31 +198,45 @@ export default function ArtisanProfile() {
           </div>
 
           {/* RIGHT */}
-          <div className="sticky top-28">
-            <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden p-8">
-              {/* glow */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(124,58,255,0.15),transparent_45%)]" />
+          <div className="lg:sticky lg:top-28">
+            <div
+              className="
+      relative
+      overflow-hidden
+      rounded-[30px]
+      border
+      border-white/10
+      bg-white/[0.04]
+      backdrop-blur-2xl
+      p-5
+      md:p-8
+    "
+            >
+              {/* Glow */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(124,58,255,.15),transparent_45%)]" />
 
               <div className="relative">
+                {/* Heading */}
                 <div className="mb-8">
-                  <h2 className="text-3xl font-semibold">Book This Artisan</h2>
+                  <div className="inline-flex items-center gap-2 rounded-full bg-[#6100FF]/10 border border-[#6100FF]/20 px-4 py-2 text-sm text-[#B794F4]">
+                    ⚡ Fast Booking
+                  </div>
 
-                  <p className="text-white/40 mt-3">
-                    Fill in your preferred schedule and service details.
+                  <h2 className="mt-5 text-2xl md:text-3xl font-bold">
+                    Book This Artisan
+                  </h2>
+
+                  <p className="mt-2 text-sm text-gray-400">
+                    Pick your preferred date and time to schedule this service.
                   </p>
                 </div>
 
-                {/* FORM */}
-                <form onSubmit={handleBooking} className="space-y-5">
-                  {/* Date and Time pickers adapted from react-datepicker library, 
-                  styled to match the app's theme. The form collects the preferred date, 
-                  time, service address, and additional notes for the booking request. 
-                  On submission, it triggers the handleBooking function to 
-                  create a new booking with the provided details. */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    {/* DATE */}
+                <form onSubmit={handleBooking} className="space-y-6">
+                  {/* Date & Time */}
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* Date */}
                     <div>
-                      <label className="text-sm text-white/50 mb-2 block">
+                      <label className="block text-sm text-gray-400 mb-2">
                         Preferred Date
                       </label>
 
@@ -204,15 +244,25 @@ export default function ArtisanProfile() {
                         selected={selectedDate}
                         onChange={(date) => setSelectedDate(date)}
                         minDate={new Date()}
-                        placeholderText="Select date"
-                        className="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-[#7C3BFF] transition"
-                        calendarClassName="!bg-zinc-900 !border !border-white/10 !text-white"
+                        placeholderText="Choose a date"
+                        className="
+                w-full
+                h-14
+                rounded-2xl
+                bg-black/40
+                border
+                border-white/10
+                px-5
+                outline-none
+                transition
+                focus:border-[#6100FF]
+              "
                       />
                     </div>
 
-                    {/* TIME */}
+                    {/* Time */}
                     <div>
-                      <label className="text-sm text-white/50 mb-2 block">
+                      <label className="block text-sm text-gray-400 mb-2">
                         Preferred Time
                       </label>
 
@@ -222,54 +272,126 @@ export default function ArtisanProfile() {
                         showTimeSelect
                         showTimeSelectOnly
                         timeIntervals={30}
-                        timeCaption="Time"
                         dateFormat="h:mm aa"
-                        placeholderText="Select time"
-                        className="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-[#7C3BFF] transition"
-                        calendarClassName="!bg-zinc-900 !border !border-white/10 !text-white"
+                        placeholderText="Choose time"
+                        className="
+                w-full
+                h-14
+                rounded-2xl
+                bg-black/40
+                border
+                border-white/10
+                px-5
+                outline-none
+                transition
+                focus:border-[#6100FF]
+              "
                       />
                     </div>
                   </div>
 
-                  {/* ADDRESS */}
+                  {/* Address */}
                   <div>
-                    <label className="text-sm text-white/50 mb-2 block">
+                    <label className="block text-sm text-gray-400 mb-2">
                       Service Address
                     </label>
 
                     <input
                       type="text"
-                      placeholder="Enter service address"
+                      placeholder="Where should the artisan come?"
                       required
-                      className="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-[#7C3BFF] transition"
                       onChange={(e) =>
-                        setForm({ ...form, address: e.target.value })
+                        setForm({
+                          ...form,
+                          address: e.target.value,
+                        })
                       }
+                      className="
+              w-full
+              h-14
+              rounded-2xl
+              bg-black/40
+              border
+              border-white/10
+              px-5
+              outline-none
+              transition
+              focus:border-[#6100FF]
+            "
                     />
                   </div>
 
-                  {/* NOTES */}
+                  {/* Notes */}
                   <div>
-                    <label className="text-sm text-white/50 mb-2 block">
+                    <label className="block text-sm text-gray-400 mb-2">
                       Additional Notes
                     </label>
 
                     <textarea
-                      placeholder="Describe the service request..."
-                      rows={5}
-                      className="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-3 outline-none focus:border-[#7C3BFF] transition resize-none"
+                      rows={4}
+                      placeholder="Describe the work to be done..."
                       onChange={(e) =>
-                        setForm({ ...form, notes: e.target.value })
+                        setForm({
+                          ...form,
+                          notes: e.target.value,
+                        })
                       }
+                      className="
+              w-full
+              rounded-2xl
+              bg-black/40
+              border
+              border-white/10
+              p-5
+              resize-none
+              outline-none
+              transition
+              focus:border-[#6100FF]
+            "
                     />
                   </div>
 
-                  {/* BUTTON */}
+                  {/* Booking Summary */}
+                  <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-400">Service</span>
+
+                      <span className="font-medium">{artisan.category}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between mt-3">
+                      <span className="text-gray-400">Artisan</span>
+
+                      <span className="font-medium">{artisan.user?.name}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between mt-3">
+                      <span className="text-gray-400">Status</span>
+
+                      <span className="text-green-400 font-medium">
+                        Available
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Button */}
                   <button
                     disabled={loading}
-                    className="cursor-pointer w-full bg-[#6100FF] text-white py-4 rounded-2xl font-semibold hover:bg-[#5500ff] transition-all duration-300 disabled:opacity-50"
+                    className="
+                    cursor-pointer
+            w-full
+            h-14
+            rounded-2xl
+            bg-[#6100FF]
+            font-semibold
+            text-white
+            transition-all
+            hover:bg-[#5500ff]
+            active:scale-[0.98]
+            disabled:opacity-50
+          "
                   >
-                    {loading ? "Booking..." : "Book Now"}
+                    {loading ? "Booking..." : "Book Appointment"}
                   </button>
                 </form>
               </div>
