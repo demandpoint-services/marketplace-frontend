@@ -27,6 +27,22 @@ export const loginUser = async (data) => {
   return res.json();
 };
 
+export async function getCurrentUser() {
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(`${API_URL}/users/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch user");
+  }
+
+  return res.json();
+}
+
 export const createBooking = async (data, token) => {
   const res = await fetch(`${API_URL}/bookings`, {
     method: "POST",
