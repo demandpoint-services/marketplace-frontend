@@ -1,4 +1,5 @@
 import { ArrowRight, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 export default function Journey() {
   return (
@@ -46,10 +47,12 @@ export default function Journey() {
                 convenience.
               </p>
 
-              <button className="group inline-flex items-center gap-3 rounded-full bg-white text-black px-7 py-4 font-medium transition-all duration-300 hover:scale-[1.02]">
-                Explore services
-                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
+              <Link href="/services">
+                <button className="cursor-pointer group inline-flex items-center gap-3 rounded-full bg-white text-black px-7 py-4 font-medium transition-all duration-300 hover:scale-[1.02]">
+                  Explore services
+                  <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </button>
+              </Link>
             </div>
 
             {/* Glow */}
