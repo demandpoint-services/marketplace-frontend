@@ -7,8 +7,14 @@ import Footer from "./Footer";
 export default function LayoutClient({ children }) {
   const pathname = usePathname();
 
-  const hideNavbar = pathname === "/login" || pathname === "/register";
-  const hideFooter = pathname === "/login" || pathname === "/register";
+  const hideNavbar =
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname === "/comingsoon";
+  const hideFooter =
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname === "/comingsoon";
 
   return (
     <>

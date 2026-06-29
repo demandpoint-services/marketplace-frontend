@@ -56,9 +56,7 @@ export default function RegisterPage() {
       localStorage.setItem("user", JSON.stringify(data.user));
       document.cookie = `token=${data.token}; path=/; max-age=604800; samesite=lax`;
 
-      router.push(
-        data.user.role === "artisan" ? "/artisan/setup" : "/dashboard",
-      );
+      router.push("/setup-account");
     } catch {
       setError("Unable to create account");
     } finally {
@@ -125,7 +123,7 @@ export default function RegisterPage() {
         >
           {loading ? (
             <>
-              <div className="h-5 w-5 rounded-full border-2 border-white/20 border-t-white animate-spin" />
+              <div className="cursor-pointer h-5 w-5 rounded-full border-2 border-white/20 border-t-white animate-spin" />
             </>
           ) : (
             "Register"

@@ -2,23 +2,46 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import {
+  House,
+  ShoppingBag,
+  UserRoundSearch,
+  CircleUserRound,
+  Bell,
+  Search,
+} from "lucide-react";
+
+import { usePathname } from "next/navigation";
+import { API_URL } from "@/lib/api";
+import { getCurrentUser } from "@/lib/api";
+
+const API = API_URL;
 
 export default function Navbar() {
   const [scrollState, setScrollState] = useState("top");
-  const [user, setUser] = useState(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("user");
-      return stored ? JSON.parse(stored) : null;
+  const [user, setUser] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const user = await getCurrentUser();
+
+        setUser(user);
+
+        localStorage.setItem("user", JSON.stringify(user));
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setMounted(true);
+      }
     }
 
-    return null;
-  });
-  const [activeMenu, setActiveMenu] = useState(null);
+    loadUser();
+  }, []);
 
-  // ✅ MOBILE STATE
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileDropdown, setMobileDropdown] = useState(null);
+  const [activeMenu, setActiveMenu] = useState(null);
+  const pathname = usePathname();
 
   const timeoutRef = useRef(null);
 
@@ -50,20 +73,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-
-    if (isMobile && mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [mobileOpen]);
-
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -80,7 +89,7 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 w-full z-[120] transition-all duration-300 ${styles[scrollState]}`}
+        className={`hidden md:block fixed top-0 w-full z-[120] transition-all duration-300 ${styles[scrollState]}`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-14 py-4 flex justify-between items-center">
           {" "}
@@ -201,13 +210,13 @@ export default function Navbar() {
                       <p className="text-xs text-gray-400 mb-3">Spaces</p>
                       <ul className="space-y-2 text-sm">
                         <li>
-                          <Link href="/services">Event Centers</Link>
+                          <Link href="/comingsoon">Event Centers</Link>
                         </li>
                         <li>
-                          <Link href="/services">Studios</Link>
+                          <Link href="/comingsoon">Studios</Link>
                         </li>
                         <li>
-                          <Link href="/services">Co-working</Link>
+                          <Link href="/comingsoon">Co-working</Link>
                         </li>
                       </ul>
                     </div>
@@ -267,197 +276,227 @@ export default function Navbar() {
                 </>
               )}
             </div>
-
-            {/* ✅ MOBILE MENU BUTTON (always visible on mobile) */}
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden ml-2 relative z-10 w-8 h-8 flex flex-col justify-center items-center"
-            >
-              <span
-                className={`absolute h-[1.5px] w-4 bg-white rounded transition-all duration-300 ${
-                  mobileOpen ? "rotate-45 translate-y-0" : "-translate-y-1"
-                }`}
-              />
-
-              <span
-                className={`absolute h-[1.5px] w-4 bg-white rounded transition-all duration-300 ${
-                  mobileOpen ? "-rotate-45 translate-y-0" : "translate-y-1"
-                }`}
-              />
-            </button>
           </div>
         </div>
       </header>
 
-      {/* ================= MOBILE MENU ================= */}
-      <div
-        className={`fixed inset-0 bg-black/95 backdrop-blur-xl z-[100] md:hidden transition-all duration-300 ${
-          mobileOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
-      >
-        <div className="flex flex-col min-h-dvh">
-          {" "}
-          {/* MOBILE HEADER */}
-          <div className="px-6 py-5 flex justify-between items-center">
-            <Link href="/" className="flex items-center">
-              <img
-                src="/logo.png"
-                alt="Demand Point Logo"
-                className="h-6 w-auto object-contain"
-              />
+      {/* ================= MOBILE TOP BAR ================= */}
+      {mounted && (
+        <div className="fixed top-3 left-1/2 -translate-x-1/2 z-[999] md:hidden w-[92vw] max-w-md">
+          <div
+            className="
+        flex
+        items-center
+        justify-between
+        rounded-full
+        bg-black/80
+        backdrop-blur-xl
+        border
+        border-white/10
+        shadow-2xl
+        px-4
+        py-3
+      "
+          >
+            {/* User */}
+            <Link
+              href={user ? "/dashboard" : "/login"}
+              className="flex items-center gap-3 active:scale-95 transition-transform duration-150"
+            >
+              <div className="relative">
+                <div className="w-10 h-10 rounded-full overflow-hidden bg-[#6100FF] flex items-center justify-center">
+                  {user?.profileImage ? (
+                    <img
+                      src={user.profileImage}
+                      alt={user.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <CircleUserRound size={22} />
+                  )}
+                </div>
+
+                <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-[#6100FF] border-2 border-black" />
+              </div>
+
+              <div className="leading-tight">
+                <p className="text-[11px] text-gray-500">Good Morning 👋</p>
+
+                <h3 className="text-sm font-semibold text-white">
+                  {user?.name || "Guest"}
+                </h3>
+              </div>
+            </Link>
+
+            {/* Notification */}
+            <Link
+              href={user ? "/notifications" : "/login"}
+              className="relative h-11 w-11 rounded-full flex items-center justify-center active:scale-95 transition-transform duration-150"
+            >
+              <Bell size={20} />
+
+              <span className="absolute top-2 right-2 h-2.5 w-2.5 rounded-full bg-[#6100FF]" />
             </Link>
           </div>
-          {/* MOBILE CONTENT */}
-          <div className="px-6 pt-6 pb-6 flex-1 flex flex-col overflow-y-auto">
-            {/* MENU */}
-            <div className="flex-1 space-y-2 text-md font-medium">
-              {/* SERVICES */}
-              <div className="border-b border-white/10 pb-4">
-                <button
-                  onClick={() =>
-                    setMobileDropdown(
-                      mobileDropdown === "services" ? null : "services",
-                    )
-                  }
-                  className="w-full flex justify-between items-center"
-                >
-                  Hire a Professional
-                  <ChevronDown
-                    size={18}
-                    className={`transition-transform duration-300 ease-out ${
-                      mobileDropdown === "services" ? "rotate-180" : "rotate-0"
-                    }`}
-                  />
-                </button>
+        </div>
+      )}
 
-                <div
-                  className={`overflow-hidden transition-all duration-300 ease-out ${
-                    mobileDropdown === "services"
-                      ? "max-h-40 opacity-100 mt-3"
-                      : "max-h-0 opacity-0"
-                  }`}
-                >
-                  <div className="pl-4 space-y-2 text-sm text-gray-400">
-                    <Link href="/services">Plumbing</Link>
-                    <Link href="/services">Electrical</Link>
-                    <Link href="/services">Cleaning</Link>
-                    <Link href="/services">Repairs</Link>
-                  </div>
-                </div>
-              </div>
+      {/* ================= MOBILE BOTTOM NAV ================= */}
 
-              {/* PRODUCTS */}
-              <div className="border-b border-white/10 pb-4">
-                <button
-                  onClick={() =>
-                    setMobileDropdown(
-                      mobileDropdown === "products" ? null : "products",
-                    )
-                  }
-                  className="w-full flex justify-between items-center"
-                >
-                  Shop Products
-                  <ChevronDown
-                    size={18}
-                    className={`transition-transform duration-300 ease-out ${
-                      mobileDropdown === "products" ? "rotate-180" : "rotate-0"
-                    }`}
-                  />
-                </button>
+      <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-[999] md:hidden">
+        <div
+          className="
+      flex
+      items-center
+      justify-between
+      w-[92vw]
+      max-w-sm
+      rounded-full
+      bg-black/80
+      backdrop-blur-xl
+      border border-white/10
+      shadow-2xl
+      px-2
+      py-2
+    "
+        >
+          {/* HOME */}
 
-                <div
-                  className={`overflow-hidden transition-all duration-300 ease-out ${
-                    mobileDropdown === "products"
-                      ? "max-h-40 opacity-100 mt-3"
-                      : "max-h-0 opacity-0"
-                  }`}
-                >
-                  <div className="pl-4 space-y-2 text-sm text-gray-400">
-                    <Link href="/marketplace">Handmade</Link>
-                    <Link href="/marketplace">Fashion</Link>
-                    <Link href="/marketplace">Furniture</Link>
-                    <Link href="/marketplace">Gifts</Link>
-                  </div>
-                </div>
-              </div>
-
-              {/* SPACES */}
-              <div className="border-b border-white/10 pb-4">
-                <button
-                  onClick={() =>
-                    setMobileDropdown(
-                      mobileDropdown === "spaces" ? null : "spaces",
-                    )
-                  }
-                  className="w-full flex justify-between items-center"
-                >
-                  Book a Space
-                  <ChevronDown
-                    size={18}
-                    className={`transition-transform duration-300 ease-out ${
-                      mobileDropdown === "spaces" ? "rotate-180" : "rotate-0"
-                    }`}
-                  />
-                </button>
-
-                <div
-                  className={`overflow-hidden transition-all duration-300 ease-out ${
-                    mobileDropdown === "spaces"
-                      ? "max-h-40 opacity-100 mt-3"
-                      : "max-h-0 opacity-0"
-                  }`}
-                >
-                  <div className="pl-4 space-y-2 text-sm text-gray-400">
-                    <p>Event Centers</p>
-                    <p>Studios</p>
-                    <p>Co-working</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* STATIC LINKS */}
-              <div className="border-b border-white/10 pb-4">Pricing</div>
-
-              <div className="border-b border-white/10 pb-4">Blog</div>
+          <Link
+            href="/"
+            className="flex-1 flex flex-col items-center gap-1 active:scale-95 transition-transform duration-150"
+          >
+            <div
+              className={`relative h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 ${
+                pathname === "/"
+                  ? "bg-[#6100FF] text-white scale-110 shadow-[0_0_25px_rgba(97,0,255,.45)]"
+                  : "text-gray-400"
+              }`}
+            >
+              <House size={20} />
             </div>
 
-            {/* CTA */}
-            <div className="space-y-3 mt-auto pt-10">
-              {!user ? (
-                <>
-                  <Link
-                    href="/login"
-                    className="block w-full text-center bg-white/10 py-3 rounded-full"
-                  >
-                    Sign in
-                  </Link>
+            <span
+              className={`text-[11px] transition-colors ${
+                pathname === "/" ? "text-white" : "text-gray-400"
+              }`}
+            >
+              Home
+            </span>
+          </Link>
 
-                  <Link
-                    href="/register"
-                    className="block w-full text-center bg-white text-black py-3 rounded-full font-medium"
-                  >
-                    Join Now
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/dashboard"
-                    className="block w-full text-center bg-white/10 py-3 rounded-full"
-                  >
-                    Dashboard
-                  </Link>
+          {/* HIRE */}
 
-                  <button
-                    onClick={logout}
-                    className="block w-full text-center bg-red-600 text-white py-3 rounded-full font-medium"
-                  >
-                    Logout
-                  </button>
-                </>
-              )}
+          <Link
+            href="/services"
+            className="flex-1 flex flex-col items-center gap-1 active:scale-95 transition-transform duration-150"
+          >
+            <div
+              className={`relative h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 ${
+                pathname.startsWith("/services")
+                  ? "bg-[#6100FF] text-white scale-110 shadow-[0_0_25px_rgba(97,0,255,.45)]"
+                  : "text-gray-400"
+              }`}
+            >
+              <UserRoundSearch size={20} />
             </div>
-          </div>
+
+            <span
+              className={`text-[11px] ${
+                pathname.startsWith("/services")
+                  ? "text-white"
+                  : "text-gray-400"
+              }`}
+            >
+              Hire
+            </span>
+          </Link>
+
+          {/* SHOP */}
+
+          <Link
+            href="/marketplace/products"
+            className="flex-1 flex flex-col items-center gap-1 active:scale-95 transition-transform duration-150"
+          >
+            <div
+              className={`relative h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 ${
+                pathname.startsWith("/marketplace/products")
+                  ? "bg-[#6100FF] text-white scale-110 shadow-[0_0_25px_rgba(97,0,255,.45)]"
+                  : "text-gray-400"
+              }`}
+            >
+              <ShoppingBag size={20} />
+            </div>
+
+            <span
+              className={`text-[11px] ${
+                pathname.startsWith("/marketplace/products")
+                  ? "text-white"
+                  : "text-gray-400"
+              }`}
+            >
+              Shop
+            </span>
+          </Link>
+
+          {/* NOTIFICATIONS */}
+
+          <Link
+            href={user ? "/notifications" : "/login"}
+            className="flex-1 flex flex-col items-center gap-1 active:scale-95 transition-transform duration-150"
+          >
+            <div
+              className={`relative h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 ${
+                pathname.startsWith("/notifications")
+                  ? "bg-[#6100FF] text-white scale-110 shadow-[0_0_25px_rgba(97,0,255,.45)]"
+                  : "text-gray-400"
+              }`}
+            >
+              <Bell size={20} />
+
+              {/* Notification Badge */}
+              <span className="absolute top-1.5 right-1.5 h-2.5 w-2.5 rounded-full bg-red-500 border border-black" />
+            </div>
+
+            <span
+              className={`text-[11px] ${
+                pathname.startsWith("/notifications")
+                  ? "text-white"
+                  : "text-gray-400"
+              }`}
+            >
+              Alerts
+            </span>
+          </Link>
+
+          {/* PROFILE */}
+
+          <Link
+            href={user ? "/dashboard" : "/login"}
+            className="flex-1 flex flex-col items-center gap-1 active:scale-95 transition-transform duration-150"
+          >
+            <div
+              className={`relative h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 ${
+                pathname.startsWith("/dashboard") ||
+                pathname.startsWith("/login")
+                  ? "bg-[#6100FF] text-white scale-110 shadow-[0_0_25px_rgba(97,0,255,.45)]"
+                  : "text-gray-400"
+              }`}
+            >
+              <CircleUserRound size={20} />
+            </div>
+
+            <span
+              className={`text-[11px] ${
+                pathname.startsWith("/dashboard") ||
+                pathname.startsWith("/login")
+                  ? "text-white"
+                  : "text-gray-400"
+              }`}
+            >
+              Profile
+            </span>
+          </Link>
         </div>
       </div>
     </>

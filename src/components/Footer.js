@@ -30,9 +30,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative border-t border-white/5 bg-black text-white overflow-hidden">
+    <footer className="hidden md:block relative border-t border-white/5 bg-black text-white overflow-hidden">
+      {" "}
       <div className="absolute inset-0 bg-black" />
-
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
         {/* Top */}
         <div className="border-x border-white/5 border-b border-white/5 px-5 sm:px-8 md:px-12 py-8 sm:py-10">
@@ -84,7 +84,7 @@ export default function Footer() {
                   {links.map((link) => (
                     <li key={link}>
                       <a
-                        href="#"
+                        href="/comingsoon"
                         className="text-sm sm:text-base text-white/75 hover:text-white transition-colors duration-300"
                       >
                         {link}
