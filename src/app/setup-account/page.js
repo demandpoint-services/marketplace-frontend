@@ -182,7 +182,7 @@ export default function SetupAccount() {
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
-      <div className="w-full max-w-xl">
+      <div className="w-full max-w-xl pb-32 pt-24 md:pt-32">
         <h1 className="text-4xl font-semibold mb-2">Complete Your Account</h1>
 
         <p className="text-white/50 mb-8">

@@ -10,6 +10,13 @@ export default function ProfilePage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    document.cookie = "token=; Max-Age=0; path=/";
+    window.location.href = "/";
+  };
+
   useEffect(() => {
     async function loadProfile() {
       try {
@@ -40,12 +47,12 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="max-w-5xl mx-auto px-6 pt-24 md:pt-32">
+      <div className="max-w-5xl mx-auto px-6 pt-24 md:pt-32 pb-32">
         {/* HEADER */}
 
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-10 md:py-16">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-10">
           <div className="flex items-center gap-6">
-            <div className="w-28 h-28 rounded-full overflow-hidden border border-white/10 bg-white/5">
+            <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border border-white/10 bg-white/5">
               {user.profileImage ? (
                 <img
                   src={user.profileImage}
@@ -53,14 +60,16 @@ export default function ProfilePage() {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-4xl font-semibold text-white/40">
+                <div className="w-full h-full flex items-center justify-center text-2xl md:text-4xl font-semibold text-white/40">
                   {user.name.charAt(0).toUpperCase()}
                 </div>
               )}
             </div>
 
             <div>
-              <h1 className="text-4xl font-semibold">{user.name}</h1>
+              <h1 className="text-2xl md:text-4xl font-semibold">
+                {user.name}
+              </h1>
 
               <p className="text-white/50 mt-2">{user.email}</p>
 
@@ -69,12 +78,53 @@ export default function ProfilePage() {
               </span>
             </div>
           </div>
+        </div>
 
+        <div className="mb-8 rounded-3xl bg-white/5 border border-white/10 overflow-hidden">
           <button
             onClick={() => router.push("/setup-account")}
-            className="cursor-pointer px-6 py-3 rounded-xl bg-[#7C3BFF] hover:bg-[#6931d7] transition"
+            className="w-full flex items-center justify-between px-6 py-5 hover:bg-white/5 transition"
           >
-            Edit Profile
+            <div>
+              <p className="font-medium">Edit Profile</p>
+              <p className="text-sm text-white/40">
+                Update your photo and personal details
+              </p>
+            </div>
+
+            <span className="text-white/40 text-xl">›</span>
+          </button>
+
+          <div className="border-t border-white/10" />
+
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="w-full flex items-center justify-between px-6 py-5 hover:bg-white/5 transition"
+          >
+            <div>
+              <p className="font-medium">Dashboard</p>
+              <p className="text-sm text-white/40">
+                View bookings, orders and activity
+              </p>
+            </div>
+
+            <span className="text-white/40 text-xl">›</span>
+          </button>
+
+          <div className="border-t border-white/10" />
+
+          <button
+            onClick={logout}
+            className="w-full flex items-center justify-between px-6 py-5 hover:bg-red-500/10 transition text-red-400"
+          >
+            <div>
+              <p className="font-medium">Logout</p>
+              <p className="text-sm text-red-300/70">
+                Sign out of your account
+              </p>
+            </div>
+
+            <span className="text-xl">›</span>
           </button>
         </div>
 
@@ -125,6 +175,38 @@ export default function ProfilePage() {
             >
               {user.profileCompleted ? "Profile Completed" : "Setup Required"}
             </span>
+          </div>
+        </div>
+
+        <div className="mt-12 border-t border-white/10 pt-8">
+          <p className="text-sm uppercase tracking-wider text-red-400 mb-5">
+            Danger Zone
+          </p>
+
+          <div className=" rounded-3xl border border-red-500/20 bg-red-500/5 p-6">
+            <h3 className="text-lg font-semibold text-red-400">
+              Delete Account
+            </h3>
+
+            <p className="text-sm text-white/50 mt-2 mb-6">
+              Permanently delete your Demand Point account, profile, bookings,
+              products and all associated data. This action cannot be undone.
+            </p>
+
+            <button
+              className="  
+      cursor-pointer
+      w-full
+      rounded-xl
+      bg-red-600
+      hover:bg-red-700
+      py-3
+      font-medium
+      transition
+    "
+            >
+              Delete My Account
+            </button>
           </div>
         </div>
       </div>
