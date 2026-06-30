@@ -56,7 +56,7 @@ export default function ClientDashboard() {
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,255,0.12),transparent_45%)]" />
 
-      <div className="relative max-w-6xl mx-auto px-6 py-16">
+      <div className="relative max-w-6xl mx-auto px-6 py-16 pb-32">
         {/* HEADER */}
         <div className="my-12">
           <h1 className="text-4xl font-semibold">

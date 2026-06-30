@@ -38,7 +38,7 @@ export default function MarketplacePage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white px-6 py-16">
+    <div className="min-h-screen bg-black text-white px-6 py-16 pb-32">
       <div className="max-w-6xl mx-auto">
         {/* HEADER */}
         <div className="my-12">

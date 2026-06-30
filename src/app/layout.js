@@ -21,7 +21,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${geistMono.variable}`}>
-      <body className="min-h-screen bg-black text-white font-sans antialiased pb-24 md:pb-0">
+      <body className="min-h-screen bg-black text-white font-sans antialiased md:pb-0">
         <LayoutClient>
           <CartProvider>{children}</CartProvider>
         </LayoutClient>

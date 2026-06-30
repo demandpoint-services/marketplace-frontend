@@ -85,7 +85,7 @@ export default function ServicesPage() {
       {/* background glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,255,0.12),transparent_45%)]" />
 
-      <div className="relative max-w-6xl mx-auto px-6 pt-24 md:pt-32">
+      <div className="relative max-w-6xl mx-auto px-6 pt-24 md:pt-32 pb-32">
         <div className="mb-2">
           {/* Search */}
           <div className="relative mb-4">

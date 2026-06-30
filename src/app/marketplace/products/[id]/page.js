@@ -32,7 +32,7 @@ export default function ProductDetails() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white px-6 py-16">
+    <div className="min-h-screen bg-black text-white px-6 py-16 pb-32">
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
         {/* IMAGE */}
         <div className="rounded-2xl overflow-hidden bg-white/10 h-96">
