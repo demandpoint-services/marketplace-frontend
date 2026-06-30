@@ -27,11 +27,18 @@ export default function Navbar() {
       try {
         const user = await getCurrentUser();
 
-        setUser(user);
+        if (!user) {
+          setUser(null);
+          localStorage.removeItem("user");
+          return;
+        }
 
+        setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
       } catch (err) {
         console.error(err);
+        setUser(null);
+        localStorage.removeItem("user");
       } finally {
         setMounted(true);
       }
@@ -472,13 +479,12 @@ export default function Navbar() {
           {/* PROFILE */}
 
           <Link
-            href={user ? "/dashboard" : "/login"}
+            href={user ? "/profile" : "/login"}
             className="flex-1 flex flex-col items-center gap-1 active:scale-95 transition-transform duration-150"
           >
             <div
               className={`relative h-11 w-11 rounded-full flex items-center justify-center transition-all duration-300 ${
-                pathname.startsWith("/dashboard") ||
-                pathname.startsWith("/login")
+                pathname.startsWith("/profile")
                   ? "bg-[#6100FF] text-white scale-110 shadow-[0_0_25px_rgba(97,0,255,.45)]"
                   : "text-gray-400"
               }`}
@@ -488,10 +494,7 @@ export default function Navbar() {
 
             <span
               className={`text-[11px] ${
-                pathname.startsWith("/dashboard") ||
-                pathname.startsWith("/login")
-                  ? "text-white"
-                  : "text-gray-400"
+                pathname.startsWith("/profile") ? "text-white" : "text-gray-400"
               }`}
             >
               Profile

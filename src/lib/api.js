@@ -30,11 +30,21 @@ export const loginUser = async (data) => {
 export async function getCurrentUser() {
   const token = localStorage.getItem("token");
 
+  if (!token) {
+    return null;
+  }
+
   const res = await fetch(`${API_URL}/users/me`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+
+  if (res.status === 401) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    return null;
+  }
 
   if (!res.ok) {
     throw new Error("Failed to fetch user");
@@ -101,3 +111,15 @@ export const removeFromCart = async (data, token) => {
 
   return res.json();
 };
+
+export async function googleLogin(body) {
+  const res = await fetch(`${API_URL}/auth/google`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  return res.json();
+}

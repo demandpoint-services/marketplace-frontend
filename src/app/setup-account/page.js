@@ -33,16 +33,14 @@ export default function SetupAccount() {
 
   // Redirect if not logged in
   useEffect(() => {
-    const localUser = JSON.parse(localStorage.getItem("user"));
-
-    if (!localUser) {
-      router.push("/login");
-      return;
-    }
-
     async function loadProfile() {
       try {
         const user = await getCurrentUser();
+
+        if (!user) {
+          router.push("/login");
+          return;
+        }
 
         setForm({
           phone: user.phone || "",
@@ -56,6 +54,7 @@ export default function SetupAccount() {
         localStorage.setItem("user", JSON.stringify(user));
       } catch (err) {
         console.error(err);
+        router.push("/login");
       }
     }
 

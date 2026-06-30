@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.13.5",
     "axios": "^1.14.0",
     "express-validator": "^7.3.2",
     "lucide-react": "^1.16.0",

@@ -7,7 +7,16 @@ export default function DashboardRouter() {
   const router = useRouter();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    let user = null;
+
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        user = JSON.parse(storedUser);
+      }
+    } catch {
+      localStorage.removeItem("user");
+    }
 
     if (!user) {
       router.push("/login");
